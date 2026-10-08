@@ -17,6 +17,16 @@ Get Compositor from [robbietilton.com/compositor](https://robbietilton.com/compo
 brew install --cask robbietilton-compositor
 ```
 
+### Windows 11
+
+The `compositor_win` branch includes a native Windows port built with .NET 10 and Avalonia. It shares the
+`.comp` project format with the macOS app and includes a desktop editor, a headless CLI, and a core test suite.
+See [`windows/README.md`](windows/README.md) for prerequisites, build commands, and known differences.
+
+The Windows port is maintained as a separate branch because the macOS app uses SwiftUI, AppKit, Core Image, and
+Metal. The port is currently based on the macOS 1.3.7 feature set; the macOS `main` branch remains the reference
+implementation for newer features.
+
 ## Features
 
 ### Layers
