@@ -1899,7 +1899,10 @@ public sealed class MainWindow : Window
 
         // The same guide dragged along the canvas with the Move tool, which is how an existing one is moved.
         SetTool(Tool.Move);
-        Drag(Aim(new SKPoint(60, 110)), Aim(new SKPoint(60, 40)));
+        // Aim a couple of pixels inside the guide's grab tolerance. A pointer event is quantized to device
+        // pixels on Windows, so landing exactly on the anti-aliased guide line can otherwise miss the hit test
+        // on high-DPI runners even though the same gesture works with a physical pointer.
+        Drag(Aim(new SKPoint(60, 108)), Aim(new SKPoint(60, 40)));
         var moved = document.Guides[0].Position;
         report.Add($"the guide dragged along the canvas: 110 → {moved:0.#}");
         if (Math.Abs(moved - 40) > 3) throw new InvalidOperationException($"the guide ended at {moved:0.#}, not 40");
