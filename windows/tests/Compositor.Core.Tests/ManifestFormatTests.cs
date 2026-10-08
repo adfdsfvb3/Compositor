@@ -141,7 +141,9 @@ public class ManifestFormatTests : ProjectTestBase
 
         using var snapshot = ProjectStore.Load(PathIn("Guide.comp"));
         var written = Serialized(snapshot.Manifest);
-        Assert.Equal(ExpectedMinimalManifest, written);
+        // Raw string literals use the checkout's line endings on Windows. The .comp format is deliberately
+        // LF-only so files written on either platform have byte-for-byte stable output.
+        Assert.Equal(ExpectedMinimalManifest.Replace("\r\n", "\n", StringComparison.Ordinal), written);
 
         var rewritten = Serialized(ManifestJson.Deserialize(Encoding.UTF8.GetBytes(written)));
         Assert.Equal(written, rewritten);
