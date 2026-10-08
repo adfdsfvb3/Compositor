@@ -40,3 +40,40 @@ jobs:
       # anything it asserts does not hold.
       - name: Drive the window with a pointer
         run: dotnet run --project src/Compositor.Desktop/Compositor.Desktop.csproj -- --clicks clicks.png
+
+      # Produce a portable Windows 11 package for people who do not have the .NET SDK installed. The publish is
+      # self-contained and includes the native image libraries used by the PSD/RAW importers.
+      - name: Publish portable app
+        run: >-
+          dotnet publish src/Compositor.Desktop/Compositor.Desktop.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          --output dist-app
+
+      - name: Add portable app instructions
+        shell: pwsh
+        run: |
+          @'
+          Compositor for Windows 11
+
+          1. Extract this ZIP to a folder.
+          2. Double-click Compositor.Desktop.exe.
+          3. No .NET installation is required.
+
+          This is the Windows port of Compositor. It follows the macOS 1.3.7 feature set and uses the same .comp
+          project format. See https://github.com/adfdsfvb3/Compositor/tree/compositor_win for known differences.
+          '@ | Set-Content -Encoding utf8 dist-app\README-Windows.txt
+
+      - name: Zip portable app
+        shell: pwsh
+        run: Compress-Archive -Path dist-app\* -DestinationPath Compositor-Windows-x64.zip -Force
+
+      - name: Upload portable app
+        uses: actions/upload-artifact@v4
+        with:
+          name: Compositor-Windows-x64
+          path: windows/Compositor-Windows-x64.zip
+          if-no-files-found: error
