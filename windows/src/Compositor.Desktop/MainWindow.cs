@@ -1871,6 +1871,14 @@ public sealed class MainWindow : Window
         // A guide pulled off a ruler: a press on the strip, dragged onto the canvas. The ruler across the top
         // makes a horizontal guide, positioned by the Y it is let go at.
         SetTool(Tool.Pan);
+        // The self-check must not inherit a user's persisted View switches. A hidden or locked guide can still
+        // be pulled from a ruler, but it cannot be grabbed on the canvas, which would make this pointer check
+        // depend on the machine that runs it.
+        _guidesVisible = true;
+        _guidesLocked = false;
+        _showGuides.IsChecked = true;
+        _lockGuides.IsChecked = false;
+        PushViewSwitches();
         if (!_rulersVisible)
         {
             // Turned on directly rather than through the View menu, so that a check does not write the view's
