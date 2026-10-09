@@ -24,17 +24,17 @@ internal sealed class TextDialog : DialogWindow
 
     private TextDialog(string title, LayerTextStyle style)
     {
-        Title = title;
+        Title = L10n.T(title);
         Width = 420;
         SizeToContent = SizeToContent.Height;
         CanResize = false;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         _content.Text = style.Content;
         _font.Text = style.FontName;
-        _size.Text = $"{style.FontSize:0.##}";
-        _colour.Text = $"{style.Red * 255:0},{style.Green * 255:0},{style.Blue * 255:0}";
-        _tracking.Text = $"{style.Tracking:0.##}";
-        _leading.Text = $"{style.Leading:0.##}";
+        _size.Text = L10n.T($"{style.FontSize:0.##}");
+        _colour.Text = L10n.T($"{style.Red * 255:0},{style.Green * 255:0},{style.Blue * 255:0}");
+        _tracking.Text = L10n.T($"{style.Tracking:0.##}");
+        _leading.Text = L10n.T($"{style.Leading:0.##}");
         _alignment.ItemsSource = new[] { "Left", "Centre", "Right" };
         _alignment.SelectedIndex = style.Alignment switch
         {
@@ -42,8 +42,8 @@ internal sealed class TextDialog : DialogWindow
             TextAlignment.Right => 2,
             _ => 0,
         };
-        var ok = new Button { Content = "OK", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
+        var ok = new Button { Content = L10n.T("OK"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
         ok.Click += (_, _) => Accept(style);
         cancel.Click += (_, _) => Close();
         var rows = new StackPanel
@@ -51,14 +51,14 @@ internal sealed class TextDialog : DialogWindow
             Spacing = 6,
             Children =
             {
-                new TextBlock { Text = "Text" },
+                new TextBlock { Text = L10n.T("Text")},
                 _content,
                 Row("Font", _font),
                 Row("Size in pixels", _size),
                 Row("Color, red green blue 0-255", _colour),
                 Row("Tracking, pixels between letters", _tracking),
                 Row("Leading, line to line 0 for auto", _leading),
-                new TextBlock { Text = "Alignment" },
+                new TextBlock { Text = L10n.T("Alignment")},
                 _alignment,
                 new StackPanel
                 {
@@ -77,7 +77,7 @@ internal sealed class TextDialog : DialogWindow
     private static Control Row(string label, Control field) => new StackPanel
     {
         Spacing = 2,
-        Children = { new TextBlock { Text = label }, field },
+        Children = { new TextBlock { Text = L10n.T(label)}, field },
     };
 
     private void Accept(LayerTextStyle original)

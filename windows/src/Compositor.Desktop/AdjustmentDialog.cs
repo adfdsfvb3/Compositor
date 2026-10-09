@@ -33,7 +33,7 @@ internal sealed class AdjustmentDialog : DialogWindow
     {
         _start = start;
         var kind = start.Kind;
-        Title = $"{LayerPlacement.Name(kind)} Adjustment";
+        Title = L10n.T($"{LayerPlacement.Name(kind)} Adjustment");
         Width = 460;
         Height = 580;
         CanResize = true;
@@ -134,7 +134,7 @@ internal sealed class AdjustmentDialog : DialogWindow
                 Add(group, "Distance, pixels", 1, 2000, start.ResolvedMotionDistance, 10, (s, v) => s.MotionDistance = v, "0");
                 break;
             case AdjustmentKind.Invert:
-                group.Children.Add(new TextBlock { Text = "Invert has no settings: it turns every pixel over." });
+                group.Children.Add(new TextBlock { Text = L10n.T("Invert has no settings: it turns every pixel over.")});
                 break;
             case AdjustmentKind.BlackWhite:
                 Add(group, "Reds", -200, 300, start.BlackWhite.Reds, 40, (s, v) => s.BlackWhiteSettings = Mix(s, reds: v));
@@ -161,9 +161,9 @@ internal sealed class AdjustmentDialog : DialogWindow
                 break;
         }
 
-        var ok = new Button { Content = "Apply", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
-        var reset = new Button { Content = "Reset" };
+        var ok = new Button { Content = L10n.T("Apply"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
+        var reset = new Button { Content = L10n.T("Reset")};
         ok.Click += (_, _) => Accept(start);
         cancel.Click += (_, _) => Close();
         reset.Click += (_, _) => Restore(new LayerAdjustment { Kind = kind });
@@ -316,7 +316,7 @@ internal sealed class AdjustmentDialog : DialogWindow
             Children =
             {
                 swatch,
-                new TextBlock { Text = label, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), VerticalAlignment = VerticalAlignment.Center },
             },
         });
         _swatches.Add((swatch, set, fallback, atStart, strip));
@@ -324,7 +324,7 @@ internal sealed class AdjustmentDialog : DialogWindow
 
     private void Check(StackPanel parent, string label, bool value, Action<LayerAdjustment, bool> set)
     {
-        var box = new CheckBox { Content = label, IsChecked = value };
+        var box = new CheckBox { Content = L10n.T(label), IsChecked = value };
         parent.Children.Add(box);
         _boxes.Add((box, set, value));
     }
@@ -335,7 +335,7 @@ internal sealed class AdjustmentDialog : DialogWindow
         Spacing = 8,
         Children =
         {
-            new TextBlock { Text = label, Width = 150, VerticalAlignment = VerticalAlignment.Center },
+            new TextBlock { Text = L10n.T(label), Width = 150, VerticalAlignment = VerticalAlignment.Center },
             control,
         },
     };
@@ -359,7 +359,7 @@ internal sealed class AdjustmentDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 150, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 150, VerticalAlignment = VerticalAlignment.Center },
                 slider,
                 readout,
             },

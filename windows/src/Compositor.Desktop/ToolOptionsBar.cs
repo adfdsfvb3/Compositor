@@ -112,7 +112,7 @@ internal sealed class ToolOptionsBar : Border
             On("transform", tool == Tool.Move && hasDocument);
             On("type", tool == Tool.Type);
             On("zoom", tool == Tool.Pan);
-            _title.Text = Names.TryGetValue(tool, out var name) ? name : "";
+            _title.Text = L10n.T(Names.TryGetValue(tool, out var name) ? name : "");
             // The marquee's shape and the lasso's kind *are* the tool in hand, so the bar follows the tool
             // rather than the other way round: picking one here asks for the tool the window already has.
             _marqueeShape.SelectedIndex = tool == Tool.Ellipse ? 1 : 0;
@@ -126,7 +126,7 @@ internal sealed class ToolOptionsBar : Border
     }
 
     /// <summary>The zoom the window is showing, for the Pan and Zoom rows.</summary>
-    public void ShowZoom(double percent) => _zoom.Text = $"zoom {percent:0}%";
+    public void ShowZoom(double percent) => _zoom.Text = L10n.T($"zoom {percent:0}%");
 
     /// <summary>Whether a row is on show, which is what the self check reads to see the gating works.</summary>
     internal bool Shows(string name) => _named.TryGetValue(name, out var cells) && cells[0].IsVisible;
@@ -143,14 +143,14 @@ internal sealed class ToolOptionsBar : Border
     /// <summary>Every row's value read back off its own control, which is what the bar is showing.</summary>
     private void Refresh()
     {
-        _size.Content = $"Size {_options.Brush.Diameter:0}";
-        _hardness.Content = $"Hardness {_options.Brush.Hardness * 100:0}%";
-        _opacity.Content = $"Opacity {_options.Brush.Opacity * 100:0}%";
-        _blurRadius.Content = $"Radius {_options.Brush.BlurRadius:0.#}";
-        _tolerance.Content = $"Tolerance {_options.Wand.Tolerance}";
-        _sampleSize.Content = $"Sample {_options.Wand.Radius}";
-        _corner.Content = $"Radius {_options.ShapeCornerRadius:0}";
-        _lineWidth.Content = $"Width {_options.ShapeLineWidth:0}";
+        _size.Content = L10n.T($"Size {_options.Brush.Diameter:0}");
+        _hardness.Content = L10n.T($"Hardness {_options.Brush.Hardness * 100:0}%");
+        _opacity.Content = L10n.T($"Opacity {_options.Brush.Opacity * 100:0}%");
+        _blurRadius.Content = L10n.T($"Radius {_options.Brush.BlurRadius:0.#}");
+        _tolerance.Content = L10n.T($"Tolerance {_options.Wand.Tolerance}");
+        _sampleSize.Content = L10n.T($"Sample {_options.Wand.Radius}");
+        _corner.Content = L10n.T($"Radius {_options.ShapeCornerRadius:0}");
+        _lineWidth.Content = L10n.T($"Width {_options.ShapeLineWidth:0}");
         _fill.Show(_options.Brush.Red, _options.Brush.Green, _options.Brush.Blue);
         _gradientFill.Show(_options.GradientBackground.Red, _options.GradientBackground.Green,
             _options.GradientBackground.Blue);
@@ -207,24 +207,24 @@ internal sealed class ToolOptionsBar : Border
     private readonly ComboBox _brushMode = new();
     private readonly ComboBox _maskPaint = new();
     private readonly ComboBox _healMode = new();
-    private readonly CheckBox _aligned = new() { Content = "Aligned" };
+    private readonly CheckBox _aligned = new() { Content = L10n.T("Aligned")};
     private readonly ComboBox _cloneAll = new();
     private readonly ComboBox _marqueeShape = new();
     private readonly ComboBox _lassoKind = new();
-    private readonly CheckBox _contiguous = new() { Content = "Contiguous" };
-    private readonly CheckBox _antialias = new() { Content = "Anti-alias" };
-    private readonly CheckBox _sampleRing = new() { Content = "Sample Ring" };
+    private readonly CheckBox _contiguous = new() { Content = L10n.T("Contiguous")};
+    private readonly CheckBox _antialias = new() { Content = L10n.T("Anti-alias")};
+    private readonly CheckBox _sampleRing = new() { Content = L10n.T("Sample Ring")};
     private readonly ComboBox _wandAll = new();
     private readonly ComboBox _shapeKind = new();
     private readonly ComboBox _gradientKind = new();
     private readonly ComboBox _gradientTo = new();
-    private readonly CheckBox _gradientReversed = new() { Content = "Reverse" };
+    private readonly CheckBox _gradientReversed = new() { Content = L10n.T("Reverse")};
     private readonly ComboBox _cropRatio = new() { Width = 150 };
-    private readonly Button _cropApply = new() { Content = "Apply Crop" };
-    private readonly Button _cropCancel = new() { Content = "Cancel" };
-    private readonly Button _flipH = new() { Content = "Flip H" };
-    private readonly Button _flipV = new() { Content = "Flip V" };
-    private readonly Button _editText = new() { Content = "Edit Text…" };
+    private readonly Button _cropApply = new() { Content = L10n.T("Apply Crop")};
+    private readonly Button _cropCancel = new() { Content = L10n.T("Cancel")};
+    private readonly Button _flipH = new() { Content = L10n.T("Flip H")};
+    private readonly Button _flipV = new() { Content = L10n.T("Flip V")};
+    private readonly Button _editText = new() { Content = L10n.T("Edit Text…")};
 
     /// <summary>What each tool's strip is called, which is the Mac's own title.</summary>
     private static readonly Dictionary<Tool, string> Names = new()

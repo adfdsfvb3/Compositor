@@ -97,7 +97,7 @@ public sealed class MainWindow : Window
     /// <summary>The clipping, mask and visibility rows, whose names and availability follow the selection.</summary>
     private readonly MenuItem _visibility = new();
     private readonly MenuItem _showGrid = new();
-    private readonly MenuItem _recentMenu = new() { Header = "Open _Recent" };
+    private readonly MenuItem _recentMenu = new() { Header = L10n.T("Open _Recent")};
     private readonly RecentProjects _recent = new(RecentProjects.DefaultPath);
     private readonly MenuItem _snapToCanvas = new();
     private readonly MenuItem _snapToGuides = new();
@@ -146,12 +146,12 @@ public sealed class MainWindow : Window
 
     /// <summary>The blend modes in the order the menu lists them, which is the order the enum declares.</summary>
     private static readonly LayerBlendMode[] BlendModes = Enum.GetValues<LayerBlendMode>();
-    private readonly MenuItem _adjustmentMenu = new() { Header = "New _Adjustment Layer" };
-    private readonly MenuItem _effectsMenu = new() { Header = "Layer _Effects" };
+    private readonly MenuItem _adjustmentMenu = new() { Header = L10n.T("New _Adjustment Layer")};
+    private readonly MenuItem _effectsMenu = new() { Header = L10n.T("Layer _Effects")};
     private MenuItem _adjustmentSettings = new();
     private MenuItem _clearEffects = new();
     private readonly MenuItem _clipping = new();
-    private readonly MenuItem _addMask = new() { Header = "Add _Mask" };
+    private readonly MenuItem _addMask = new() { Header = L10n.T("Add _Mask")};
     private readonly MenuItem _maskToggle = new();
     private readonly MenuItem _maskLink = new();
 
@@ -165,13 +165,13 @@ public sealed class MainWindow : Window
     private TextSession? _text;
 
     /// <summary>The Gradient tool's own rows in the Tools menu, which the options bar also shows.</summary>
-    private readonly MenuItem _gradientMenu = new() { Header = "Gradient _options" };
+    private readonly MenuItem _gradientMenu = new() { Header = L10n.T("Gradient _options")};
 
     /// <summary>The Shape tool's own rows in the Tools menu, which the options bar also shows.</summary>
-    private readonly MenuItem _shapeKinds = new() { Header = "Shape _kind" };
+    private readonly MenuItem _shapeKinds = new() { Header = L10n.T("Shape _kind")};
 
     /// <summary>The crop frame's shape: the canvas's own, or one of the fixed ratios.</summary>
-    private readonly MenuItem _cropRatios = new() { Header = "Crop _ratio" };
+    private readonly MenuItem _cropRatios = new() { Header = L10n.T("Crop _ratio")};
 
     /// <summary>The crop frame while the Crop tool is in hand; null is the whole canvas.</summary>
     private SKRectI? _cropFrame;
@@ -183,14 +183,14 @@ public sealed class MainWindow : Window
     /// <summary>Whether a brush stroke goes on the active layer's mask instead of its pixels.</summary>
     private readonly MenuItem _paintOnMask = new()
     {
-        Header = "Paint on the layer _mask",
+        Header = L10n.T("Paint on the layer _mask"),
         ToggleType = MenuItemToggleType.CheckBox,
     };
 
     /// <summary>Whether the brush paints or erases; on a mask, that is white or black.</summary>
     private readonly MenuItem _eraseToggle = new()
     {
-        Header = "Brush _erases",
+        Header = L10n.T("Brush _erases"),
         ToggleType = MenuItemToggleType.CheckBox,
     };
 
@@ -289,7 +289,7 @@ public sealed class MainWindow : Window
 
     public MainWindow()
     {
-        Title = "Compositor";
+        Title = L10n.T("Compositor");
         Width = 1280;
         Height = 820;
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -380,10 +380,10 @@ public sealed class MainWindow : Window
         _grid = _tools.Grid();
         _gridVisible = _tools.ShowGrid;
         _canvas.Grid = _gridVisible ? _grid : null;
-        _showGrid.Header = _gridVisible ? "_Hide Grid" : "Show _Grid";
+        _showGrid.Header = L10n.T(_gridVisible ? "_Hide Grid" : "Show _Grid");
         _showGrid.Click += (_, _) => ShowGrid();
         _rulersVisible = _tools.ShowRulers;
-        _showRulers.Header = "R_ulers";
+        _showRulers.Header = L10n.T("R_ulers");
         _showRulers.ToggleType = MenuItemToggleType.CheckBox;
         _showRulers.IsChecked = _rulersVisible;
         _showRulers.Click += (_, _) => ShowRulers();
@@ -403,7 +403,7 @@ public sealed class MainWindow : Window
         {
             // A tick box, so the four read as switches rather than as commands. They open where they were left,
             // as the Mac build's tool defaults do.
-            item.Header = label;
+            item.Header = L10n.T(label);
             item.ToggleType = MenuItemToggleType.CheckBox;
             item.IsChecked = _tools.SnapTo.HasFlag(flag);
             item.Click += (_, _) => ToggleSnapTo(flag, label);
@@ -441,7 +441,7 @@ public sealed class MainWindow : Window
             {
                 new MenuItem
                 {
-                    Header = "_File",
+                    Header = L10n.T("_File"),
                     Items =
                     {
                         Command("_New Project…", () => _ = NewProject(), "New Project"),
@@ -460,7 +460,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_Edit",
+                    Header = L10n.T("_Edit"),
                     Items =
                     {
                         Command("_Undo", Undo, "Undo"),
@@ -488,7 +488,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_Layer",
+                    Header = L10n.T("_Layer"),
                     Items =
                     {
                         LayerCommand("_Duplicate Layer", DuplicateLayer, "Duplicate Layer"),
@@ -523,7 +523,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_Image",
+                    Header = L10n.T("_Image"),
                     Items =
                     {
                         Command("_Hue/Saturation…", () => _ = ImageAdjustment(AdjustmentKind.HueSaturation),
@@ -531,7 +531,7 @@ public sealed class MainWindow : Window
                         Command("_Levels…", () => _ = ImageAdjustment(AdjustmentKind.Levels), "Levels"),
                         new MenuItem
                         {
-                            Header = "_Auto Levels",
+                            Header = L10n.T("_Auto Levels"),
                             Items =
                             {
                                 Command("Auto _Contrast", () => AutoLevels(LevelsAuto.Contrast)),
@@ -555,7 +555,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_Filter",
+                    Header = L10n.T("_Filter"),
                     Items =
                     {
                         Command("_Camera Raw Filter…", CameraRawFilter),
@@ -575,7 +575,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_Tools",
+                    Header = L10n.T("_Tools"),
                     Items =
                     {
                         ToolItem("_Pan (drag to scroll)", Tool.Pan, "Hand tool"),
@@ -609,7 +609,7 @@ public sealed class MainWindow : Window
                         new Separator(),
                         new MenuItem
                         {
-                            Header = "_Brush settings",
+                            Header = L10n.T("_Brush settings"),
                             Items =
                             {
                                 Command("_Size…", () => _ = SetBrush(BrushSetting.Size)),
@@ -626,7 +626,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_Select",
+                    Header = L10n.T("_Select"),
                     Items =
                     {
                         Command("Select _All", () => Change("Select All", SelectionEdits.SelectAll), "Select All"),
@@ -645,7 +645,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_View",
+                    Header = L10n.T("_View"),
                     Items =
                     {
                         Command("Zoom _in", () => { _canvas.ZoomBy(1.25); Say(); }, "Zoom In"),
@@ -672,7 +672,7 @@ public sealed class MainWindow : Window
                 },
                 new MenuItem
                 {
-                    Header = "_Help",
+                    Header = L10n.T("_Help"),
                     Items =
                     {
                         Command("_Check for Updates…", () => _ = CheckForUpdates()),
@@ -684,7 +684,7 @@ public sealed class MainWindow : Window
         var layers = new DockPanel();
         layers.Children.Add(new TextBlock
         {
-            Text = "Layers",
+            Text = L10n.T("Layers"),
             Margin = new Thickness(10, 8, 10, 6),
             Foreground = Ink,
             FontWeight = FontWeight.SemiBold,
@@ -744,8 +744,8 @@ public sealed class MainWindow : Window
     /// </summary>
     private Control Toolbar()
     {
-        var add = new Button { Content = "＋", Padding = new Thickness(8, 0, 8, 0) };
-        ToolTip.SetTip(add, "New canvas");
+        var add = new Button { Content = L10n.T("＋"), Padding = new Thickness(8, 0, 8, 0) };
+        ToolTip.SetTip(add, L10n.T("New canvas"));
         add.Click += (_, _) => _ = NewProject();
         var zooms = new StackPanel
         {
@@ -776,8 +776,8 @@ public sealed class MainWindow : Window
     /// <summary>A button of the toolbar: the same command a View menu row is, with the status line refreshed.</summary>
     private Button ViewButton(string text, string hint, Action act)
     {
-        var button = new Button { Content = text, Padding = new Thickness(8, 2, 8, 2) };
-        ToolTip.SetTip(button, hint);
+        var button = new Button { Content = L10n.T(text), Padding = new Thickness(8, 2, 8, 2) };
+        ToolTip.SetTip(button, L10n.T(hint));
         button.Click += (_, _) =>
         {
             act();
@@ -824,7 +824,7 @@ public sealed class MainWindow : Window
     /// </summary>
     private MenuItem Command(string header, Action action, string? key = null)
     {
-        var item = new MenuItem { Header = header };
+        var item = new MenuItem { Header = L10n.T(header)};
         item.Click += (_, _) => action();
         ShowKey(item, key);
         return item;
@@ -1288,7 +1288,7 @@ public sealed class MainWindow : Window
         {
             var picked = await StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
             {
-                Title = "Open a Compositor project folder",
+                Title = L10n.T("Open a Compositor project folder"),
                 AllowMultiple = false,
             });
             if (picked.Count == 0 || picked[0].TryGetLocalPath() is not { } path) return;
@@ -2238,15 +2238,15 @@ public sealed class MainWindow : Window
         {
             throw new InvalidOperationException("the Dither panel has no list of looks");
         }
-        var halftone = look.Items.Cast<object>().ToList().FindIndex(item => LabelOf(item) == "Halftone Dots");
+        var halftone = look.Items.Cast<object>().ToList().FindIndex(item => IsLabel(LabelOf(item), "Halftone Dots"));
         if (halftone < 0) throw new InvalidOperationException("the Dither panel has no Halftone Dots look");
         look.SelectedIndex = halftone;
         // Two Colors is the choice whose ink and paper are the panel's own, so it is the one that shows the
         // two swatches; the ink is then chosen through the picker, as the Mac's panel does it.
         var inkAndPaper = ditherPanel.GetVisualDescendants().OfType<ComboBox>()
-            .FirstOrDefault(box => box.Items.Cast<object>().Any(item => LabelOf(item) == "Two Colors"))
+            .FirstOrDefault(box => box.Items.Cast<object>().Any(item => IsLabel(LabelOf(item), "Two Colors")))
             ?? throw new InvalidOperationException("the Dither panel has no Ink and paper list");
-        inkAndPaper.SelectedIndex = inkAndPaper.Items.Cast<object>().ToList().FindIndex(item => LabelOf(item) == "Two Colors");
+        inkAndPaper.SelectedIndex = inkAndPaper.Items.Cast<object>().ToList().FindIndex(item => IsLabel(LabelOf(item), "Two Colors"));
         Dispatcher.UIThread.RunJobs();
         if (ditherPanel.GetVisualDescendants().OfType<ColorSwatch>().FirstOrDefault() is not { } ink)
         {
@@ -2548,6 +2548,9 @@ public sealed class MainWindow : Window
         _ => null,
     };
 
+    private static bool IsLabel(string? actual, string expected) =>
+        actual == expected || actual == L10n.T(expected);
+
     /// <summary>
     /// One of a dialog's amounts, found by the label its row carries rather than by its place in the panel: a
     /// row a look hides is still in the tree, so the last slider built is not the last one a hand can reach.
@@ -2555,7 +2558,7 @@ public sealed class MainWindow : Window
     private static Slider AmountIn(Window dialog, string label)
     {
         var row = dialog.GetVisualDescendants().OfType<StackPanel>().FirstOrDefault(candidate =>
-            candidate.Children.OfType<TextBlock>().Any(text => text.Text == label)
+            candidate.Children.OfType<TextBlock>().Any(text => text.Text == label || text.Text == L10n.T(label))
             && candidate.Children.OfType<Slider>().Any());
         return row?.Children.OfType<Slider>().FirstOrDefault()
             ?? throw new InvalidOperationException($"the dialog has no amount called {label}");
@@ -2565,7 +2568,7 @@ public sealed class MainWindow : Window
     private static void PressIn(Window dialog, string label)
     {
         var button = dialog.GetVisualDescendants().OfType<Button>()
-            .FirstOrDefault(candidate => (candidate.Content as string) == label)
+            .FirstOrDefault(candidate => (candidate.Content as string) is { } content && (content == label || content == L10n.T(label)))
             ?? throw new InvalidOperationException($"the dialog has no button called {label}");
         Press(dialog, At(dialog, button, 0.5));
     }
@@ -2798,7 +2801,7 @@ public sealed class MainWindow : Window
             name.Click += (_, _) => Bring(tab);
             var close = new Button
             {
-                Content = "×", Padding = new Thickness(4, 0, 4, 0), Tag = tab, Background = Brushes.Transparent,
+                Content = L10n.T("×"), Padding = new Thickness(4, 0, 4, 0), Tag = tab, Background = Brushes.Transparent,
             };
             close.Click += (_, _) => _ = CloseTab(tab);
             // A tab is a capsule, as the Mac draws one: the one in front the brighter of the two.
@@ -2818,7 +2821,7 @@ public sealed class MainWindow : Window
                 },
             });
         }
-        var add = new Button { Content = "+", Padding = new Thickness(8, 0, 8, 0) };
+        var add = new Button { Content = L10n.T("+"), Padding = new Thickness(8, 0, 8, 0) };
         add.Click += (_, _) => _ = NewProject();
         _tabStrip.Children.Add(add);
     }
@@ -2936,7 +2939,7 @@ public sealed class MainWindow : Window
         _opacity.PropertyChanged += (_, change) =>
         {
             if (change.Property != Slider.ValueProperty) return;
-            _opacityReadout.Text = $"{_opacity.Value:0}%";
+            _opacityReadout.Text = L10n.T($"{_opacity.Value:0}%");
             if (_showingAppearance) return;
             if (_opacityDragging)
             {
@@ -2975,7 +2978,7 @@ public sealed class MainWindow : Window
                     Spacing = 6,
                     Children =
                     {
-                        new TextBlock { Text = "Opacity", Width = 52, VerticalAlignment = VerticalAlignment.Center },
+                        new TextBlock { Text = L10n.T("Opacity"), Width = 52, VerticalAlignment = VerticalAlignment.Center },
                         _opacity,
                         _opacityReadout,
                     },
@@ -2999,7 +3002,7 @@ public sealed class MainWindow : Window
         {
             _blend.SelectedIndex = layer is null ? -1 : _blendRows.IndexOf(layer.BlendMode);
             _opacity.Value = (layer?.Opacity ?? 1) * 100;
-            _opacityReadout.Text = $"{_opacity.Value:0}%";
+            _opacityReadout.Text = L10n.T($"{_opacity.Value:0}%");
             _blend.IsEnabled = _opacity.IsEnabled = layer is not null;
         }
         finally
@@ -3021,17 +3024,17 @@ public sealed class MainWindow : Window
         }
 
         var plan = document is not null && layer is not null ? LayerMerge.Plan(document, SelectedLayers, layer.ID) : null;
-        _merge.Header = "_" + (plan?.Action ?? "Merge Down");
+        _merge.Header = L10n.T("_" + (plan?.Action ?? "Merge Down"));
         _merge.IsEnabled = plan is not null;
-        _visibility.Header = layer?.IsVisible == false ? "_Show Layer" : "_Hide Layer";
+        _visibility.Header = L10n.T(layer?.IsVisible == false ? "_Show Layer" : "_Hide Layer");
         _visibility.IsEnabled = layer is not null;
         ShowAppearance(layer);
-        _clipping.Header = layer?.MaskSourceID is not null ? "Release _Clipping Mask" : "Create _Clipping Mask";
+        _clipping.Header = L10n.T(layer?.MaskSourceID is not null ? "Release _Clipping Mask" : "Create _Clipping Mask");
         _clipping.IsEnabled = document is not null && layer is not null && LayerMaskEdits.CanToggle(document, layer.ID);
         _addMask.IsEnabled = layer is { Mask: null };
-        _maskToggle.Header = layer?.Mask?.IsEnabled == false ? "_Enable Mask" : "_Disable Mask";
+        _maskToggle.Header = L10n.T(layer?.Mask?.IsEnabled == false ? "_Enable Mask" : "_Disable Mask");
         _maskToggle.IsEnabled = layer?.Mask is not null;
-        _maskLink.Header = layer?.Mask?.IsLinked == false ? "Li_nk Mask" : "Un_ink Mask";
+        _maskLink.Header = L10n.T(layer?.Mask?.IsLinked == false ? "Li_nk Mask" : "Un_ink Mask");
         _maskLink.IsEnabled = layer is { IsGroup: false, Mask: not null };
     }
 
@@ -3245,7 +3248,7 @@ public sealed class MainWindow : Window
     {
         var item = new MenuItem
         {
-            Header = header,
+            Header = L10n.T(header),
             ToggleType = MenuItemToggleType.CheckBox,
             IsChecked = tool == Tool.Pan,
         };
@@ -4355,7 +4358,7 @@ public sealed class MainWindow : Window
     {
         _gridVisible = !_gridVisible;
         _canvas.Grid = _gridVisible ? _grid : null;
-        _showGrid.Header = _gridVisible ? "_Hide Grid" : "Show _Grid";
+        _showGrid.Header = L10n.T(_gridVisible ? "_Hide Grid" : "Show _Grid");
         KeepSwitches();
         _canvas.InvalidateVisual();
         Say(_gridVisible ? $"Grid every {_grid.Spacing} pixels" : "Grid hidden");
@@ -4364,7 +4367,7 @@ public sealed class MainWindow : Window
     /// <summary>A View menu row that is a switch: it opens where it was left and turns over when clicked.</summary>
     private static void Toggle(string header, MenuItem item, bool on, Action flip)
     {
-        item.Header = header;
+        item.Header = L10n.T(header);
         item.ToggleType = MenuItemToggleType.CheckBox;
         item.IsChecked = on;
         item.Click += (_, _) => flip();
@@ -4804,7 +4807,7 @@ public sealed class MainWindow : Window
         }
         if (projects.Count == 0)
         {
-            _recentMenu.Items.Add(new MenuItem { Header = "Nothing yet", IsEnabled = false });
+            _recentMenu.Items.Add(new MenuItem { Header = L10n.T("Nothing yet"), IsEnabled = false });
         }
         _recentMenu.Items.Add(new Separator());
         var clear = Command("_Clear Menu", () =>
@@ -5602,7 +5605,7 @@ public sealed class MainWindow : Window
         {
             var picked = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
-                Title = "Import an image",
+                Title = L10n.T("Import an image"),
                 AllowMultiple = false,
                 FileTypeFilter =
                 [
@@ -5668,7 +5671,7 @@ public sealed class MainWindow : Window
         {
             var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {
-                Title = "Save the project",
+                Title = L10n.T("Save the project"),
                 SuggestedFileName = _projectPath is { } known ? Path.GetFileName(known) : "Untitled.comp",
                 DefaultExtension = "comp",
             });
@@ -5721,7 +5724,7 @@ public sealed class MainWindow : Window
         {
             var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {
-                Title = "Export PNG",
+                Title = L10n.T("Export PNG"),
                 SuggestedFileName = "Compositor export.png",
                 DefaultExtension = "png",
             });
@@ -5751,7 +5754,7 @@ public sealed class MainWindow : Window
         {
             var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {
-                Title = "Export JPEG",
+                Title = L10n.T("Export JPEG"),
                 SuggestedFileName = "Compositor export.jpg",
                 DefaultExtension = "jpg",
             });
@@ -5782,10 +5785,10 @@ public sealed class MainWindow : Window
     private void Say(string message = "")
     {
         if (message.Length > 0) _message = message;
-        _status.Text = _message;
-        var limit = _canvas.ZoomedOutAsFarAsItGoes ? "    as far out as one screenful can be drawn" : "";
+        _status.Text = L10n.T(_message);
+        var limit = _canvas.ZoomedOutAsFarAsItGoes ? "    （已缩小到单屏可见范围）" : "";
         _statusInfo.Text = _document is not { } document
-            ? "Ready when you are"
-            : $"{_canvas.Zoom * 100:0}%    {document.Width} × {document.Height} px    sRGB · Transparent{limit}";
+            ? L10n.T("Ready when you are")
+            : $"{_canvas.Zoom * 100:0}%    {document.Width} × {document.Height} 像素    sRGB · 透明{limit}";
     }
 }

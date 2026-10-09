@@ -1,3 +1,9 @@
+## 中文说明（Windows 中文版）
+
+本分支提供面向 Windows 11 的中文桌面发行包。下载 [Compositor-Windows-x64-zh-CN.zip](https://github.com/adfdsfvb3/Compositor/releases/tag/windows-v1.3.7-zh-CN) 后解压，直接运行 `Compositor.Desktop.exe` 即可；普通用户无需安装 .NET。
+
+程序默认使用简体中文。若需要英文界面，请在启动前设置环境变量 `COMPOSITOR_LANGUAGE=en`（PowerShell：`$env:COMPOSITOR_LANGUAGE="en"`）。更多面向新用户的步骤请看仓库根目录的 [中文首页](../README.md)。
+
 # Compositor for Windows
 
 A Windows build of [Compositor](https://github.com/robbietilton/Compositor), the macOS image editor. It is a

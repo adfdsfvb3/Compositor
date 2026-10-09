@@ -16,7 +16,7 @@ internal sealed class GuideDialog : DialogWindow
 
     private GuideDialog(int width, int height)
     {
-        Title = "New Guide";
+        Title = L10n.T("New Guide");
         Width = 380;
         SizeToContent = SizeToContent.Height;
         CanResize = false;
@@ -26,8 +26,8 @@ internal sealed class GuideDialog : DialogWindow
         _axis.Width = 180;
         _position = new TextBox { Text = (height / 2).ToString(), Width = 100 };
 
-        var ok = new Button { Content = "OK", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
+        var ok = new Button { Content = L10n.T("OK"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
         ok.Click += (_, _) => Accept(width, height);
         cancel.Click += (_, _) => Close();
 
@@ -41,7 +41,7 @@ internal sealed class GuideDialog : DialogWindow
                 Row("Position, pixels", _position),
                 new TextBlock
                 {
-                    Text = $"The canvas is {width} x {height}. A guide may sit outside it, out in the pasteboard.",
+                    Text = L10n.T($"The canvas is {width} x {height}. A guide may sit outside it, out in the pasteboard."),
                     TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 },
                 new StackPanel
@@ -67,7 +67,7 @@ internal sealed class GuideDialog : DialogWindow
         Spacing = 8,
         Children =
         {
-            new TextBlock { Text = label, Width = 120, VerticalAlignment = VerticalAlignment.Center },
+            new TextBlock { Text = L10n.T(label), Width = 120, VerticalAlignment = VerticalAlignment.Center },
             control,
         },
     };

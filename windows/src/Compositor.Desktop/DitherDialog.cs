@@ -56,7 +56,7 @@ internal sealed class DitherDialog : DialogWindow
     private DitherDialog(DitherStyle style, DitherSettings start)
     {
         _amounts = start.Copy();
-        Title = "Dither";
+        Title = L10n.T("Dither");
         Width = 460;
         Height = 660;
         CanResize = true;
@@ -75,7 +75,7 @@ internal sealed class DitherDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = "Look", Width = 130, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T("Look"), Width = 130, VerticalAlignment = VerticalAlignment.Center },
                 _style,
             },
         }, () => true);
@@ -132,16 +132,16 @@ internal sealed class DitherDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = "Dark", VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T("Dark"), VerticalAlignment = VerticalAlignment.Center },
                 dark,
-                new TextBlock { Text = "Light", Margin = new Thickness(10, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T("Light"), Margin = new Thickness(10, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center },
                 light,
             },
         }, TwoColours);
 
-        var ok = new Button { Content = "Apply", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
-        var reset = new Button { Content = "Reset" };
+        var ok = new Button { Content = L10n.T("Apply"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
+        var reset = new Button { Content = L10n.T("Reset")};
         ok.Click += (_, _) => Accept();
         cancel.Click += (_, _) => Close();
         reset.Click += (_, _) => Restore(defaults);
@@ -181,7 +181,7 @@ internal sealed class DitherDialog : DialogWindow
     {
         var heading = new TextBlock
         {
-            Text = text,
+            Text = L10n.T(text),
             FontWeight = FontWeight.SemiBold,
             Margin = new Thickness(0, 10, 0, 2),
         };
@@ -208,7 +208,7 @@ internal sealed class DitherDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 130, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 130, VerticalAlignment = VerticalAlignment.Center },
                 box,
             },
         }, applies);
@@ -217,7 +217,7 @@ internal sealed class DitherDialog : DialogWindow
     /// <summary>"Light on dark" is a box, not a list, since it says yes or no.</summary>
     private void Choice(StackPanel parent, string label, CheckBox box, bool selected, Func<bool> applies)
     {
-        box.Content = label;
+        box.Content = L10n.T(label);
         box.IsChecked = selected;
         Row(parent, box, applies);
     }
@@ -228,7 +228,7 @@ internal sealed class DitherDialog : DialogWindow
         Spacing = 8,
         Children =
         {
-            new TextBlock { Text = label, Width = 130, VerticalAlignment = VerticalAlignment.Center },
+            new TextBlock { Text = L10n.T(label), Width = 130, VerticalAlignment = VerticalAlignment.Center },
             box,
         },
     }, applies);
@@ -273,7 +273,7 @@ internal sealed class DitherDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 130, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 130, VerticalAlignment = VerticalAlignment.Center },
                 slider,
                 readout,
             },

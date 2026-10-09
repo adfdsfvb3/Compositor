@@ -15,7 +15,7 @@ internal sealed class EffectDialog : DialogWindow
 {
     private readonly List<(Slider Slider, Action<object, double> Set)> _rows = [];
     private readonly List<double> _fallbacks = [];
-    private readonly CheckBox _on = new() { Content = "Draw this effect" };
+    private readonly CheckBox _on = new() { Content = L10n.T("Draw this effect")};
     private readonly CheckBox? _inside;
     private readonly EffectKind _kind;
     private LayerEffects? _result;
@@ -41,7 +41,7 @@ internal sealed class EffectDialog : DialogWindow
                 Colour(group, "Color", stroke.Red, stroke.Green, stroke.Blue,
                     (r, g, b) => { stroke.Red = r; stroke.Green = g; stroke.Blue = b; });
                 Add(group, "Opacity", 0, 1, stroke.Opacity, 1, (s, v) => ((StrokeEffect)s).Opacity = v, "0.00");
-                _inside = new CheckBox { Content = "Inside the edge", IsChecked = stroke.Inside };
+                _inside = new CheckBox { Content = L10n.T("Inside the edge"), IsChecked = stroke.Inside };
                 group.Children.Add(_inside);
                 break;
             }
@@ -100,9 +100,9 @@ internal sealed class EffectDialog : DialogWindow
             }
         }
 
-        var ok = new Button { Content = "Apply", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
-        var remove = new Button { Content = "Remove" };
+        var ok = new Button { Content = L10n.T("Apply"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
+        var remove = new Button { Content = L10n.T("Remove")};
         ok.Click += (_, _) => Accept();
         cancel.Click += (_, _) => Close();
         remove.Click += (_, _) =>
@@ -179,7 +179,7 @@ internal sealed class EffectDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 140, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 140, VerticalAlignment = VerticalAlignment.Center },
                 slider,
                 readout,
             },

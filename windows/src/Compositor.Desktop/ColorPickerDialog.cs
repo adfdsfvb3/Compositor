@@ -55,7 +55,7 @@ internal sealed class ColorPickerDialog : DialogWindow
 
     public ColorPickerDialog(string title, (double Red, double Green, double Blue) start)
     {
-        Title = title;
+        Title = L10n.T(title);
         Width = 560;
         SizeToContent = SizeToContent.Height;
         CanResize = false;
@@ -66,8 +66,8 @@ internal sealed class ColorPickerDialog : DialogWindow
         _hue = new HueStrip(_hsb);
         _hue.Changed += Refresh;
 
-        var ok = new Button { Content = "OK", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
+        var ok = new Button { Content = L10n.T("OK"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
         Ok = ok;
         Cancel = cancel;
         ok.Click += (_, _) =>
@@ -135,7 +135,7 @@ internal sealed class ColorPickerDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = "#", Width = 14, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T("#"), Width = 14, VerticalAlignment = VerticalAlignment.Center },
                 _hex,
             },
         });
@@ -155,7 +155,7 @@ internal sealed class ColorPickerDialog : DialogWindow
                 numbers,
                 new TextBlock
                 {
-                    Text = "Click the canvas to sample",
+                    Text = L10n.T("Click the canvas to sample"),
                     Foreground = Skin.SecondaryBrush,
                     FontSize = 11,
                 },

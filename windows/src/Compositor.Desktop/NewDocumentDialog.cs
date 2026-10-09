@@ -26,9 +26,9 @@ internal sealed class NewDocumentDialog : DialogWindow
         ("A3 at 300 per inch", 3508, 4961),
     ];
 
-    private readonly TextBox _width = new() { Text = "1920", Width = 100 };
-    private readonly TextBox _height = new() { Text = "1080", Width = 100 };
-    private readonly TextBox _resolution = new() { Text = "72", Width = 100 };
+    private readonly TextBox _width = new() { Text = L10n.T("1920"), Width = 100 };
+    private readonly TextBox _height = new() { Text = L10n.T("1080"), Width = 100 };
+    private readonly TextBox _resolution = new() { Text = L10n.T("72"), Width = 100 };
     private readonly ComboBox _preset = new() { Width = 200 };
     private readonly TextBlock _size = new() { Margin = new Thickness(0, 4, 0, 0) };
     private bool _choosing;
@@ -47,7 +47,7 @@ internal sealed class NewDocumentDialog : DialogWindow
 
     internal NewDocumentDialog()
     {
-        Title = "New Project";
+        Title = L10n.T("New Project");
         Width = 400;
         SizeToContent = SizeToContent.Height;
         CanResize = false;
@@ -64,8 +64,8 @@ internal sealed class NewDocumentDialog : DialogWindow
             if (change.Property == TextBox.TextProperty) ShowSize();
         };
 
-        var ok = new Button { Content = "OK", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
+        var ok = new Button { Content = L10n.T("OK"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
         ok.Click += (_, _) => Accept();
         cancel.Click += (_, _) => Close();
         Content = new StackPanel
@@ -103,7 +103,7 @@ internal sealed class NewDocumentDialog : DialogWindow
         Spacing = 8,
         Children =
         {
-            new TextBlock { Text = label, Width = 140, VerticalAlignment = VerticalAlignment.Center },
+            new TextBlock { Text = L10n.T(label), Width = 140, VerticalAlignment = VerticalAlignment.Center },
             control,
         },
     };
@@ -133,17 +133,17 @@ internal sealed class NewDocumentDialog : DialogWindow
         if (!int.TryParse(_width.Text, out var width) || !int.TryParse(_height.Text, out var height)
             || width < 1 || height < 1)
         {
-            _size.Text = "A canvas is at least one pixel each way";
+            _size.Text = L10n.T("A canvas is at least one pixel each way");
             return;
         }
         if (width > DocumentLimits.MaxSide || height > DocumentLimits.MaxSide)
         {
-            _size.Text = $"A side is at most {DocumentLimits.MaxSide} pixels";
+            _size.Text = L10n.T($"A side is at most {DocumentLimits.MaxSide} pixels");
             return;
         }
         var megapixels = width * (double)height / 1_000_000;
         var megabytes = width * (long)height * 4 / 1024.0 / 1024.0;
-        _size.Text = $"{megapixels:0.#} megapixels, about {megabytes:0} MB while it is open";
+        _size.Text = L10n.T($"{megapixels:0.#} megapixels, about {megabytes:0} MB while it is open");
         if ((long)width * height > DocumentLimits.MaxSurfacePixels)
         {
             _size.Text += $" — too big to hold (the most is {DocumentLimits.MaxSurfaceMegapixels} megapixels)";

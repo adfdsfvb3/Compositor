@@ -19,7 +19,7 @@ internal sealed class FilterDialog : DialogWindow
     /// </summary>
     public Action<FilterSettings?>? Preview { get; set; }
 
-    private readonly CheckBox _preview = new() { Content = "Preview", IsChecked = true };
+    private readonly CheckBox _preview = new() { Content = L10n.T("Preview"), IsChecked = true };
 
     private readonly List<(Slider Slider, Action<FilterSettings, double> Set)> _rows = [];
     private readonly List<double> _fallbacks = [];
@@ -101,9 +101,9 @@ internal sealed class FilterDialog : DialogWindow
                 break;
         }
 
-        var ok = new Button { Content = "Apply", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
-        var reset = new Button { Content = "Reset" };
+        var ok = new Button { Content = L10n.T("Apply"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
+        var reset = new Button { Content = L10n.T("Reset")};
         ok.Click += (_, _) => Accept();
         cancel.Click += (_, _) => Close();
         reset.Click += (_, _) => Restore();
@@ -123,7 +123,7 @@ internal sealed class FilterDialog : DialogWindow
     /// <summary>A box that follows the setting it belongs to, and what it started as for Reset.</summary>
     private void Check(StackPanel parent, string label, bool value, Action<FilterSettings, bool> set)
     {
-        var box = new CheckBox { Content = label, IsChecked = value };
+        var box = new CheckBox { Content = L10n.T(label), IsChecked = value };
         parent.Children.Add(box);
         _checks.Add((box, set, value));
     }
@@ -147,7 +147,7 @@ internal sealed class FilterDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 130, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 130, VerticalAlignment = VerticalAlignment.Center },
                 slider,
                 readout,
             },
@@ -178,7 +178,7 @@ internal sealed class FilterDialog : DialogWindow
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 130, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 130, VerticalAlignment = VerticalAlignment.Center },
                 swatch,
             },
         });

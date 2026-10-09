@@ -34,14 +34,14 @@ internal sealed class ShortcutDialog : DialogWindow
         TextWrapping = TextWrapping.Wrap,
         IsVisible = false,
     };
-    private readonly Button _save = new() { Content = "Save", IsDefault = true };
+    private readonly Button _save = new() { Content = L10n.T("Save"), IsDefault = true };
     /// <summary>The row being recorded, or null when the keys are the sheet's own again.</summary>
     private string? _recording;
     private Dictionary<string, ShortcutChord>? _result;
 
     internal ShortcutDialog(IReadOnlyDictionary<string, ShortcutChord> overrides)
     {
-        Title = "Keyboard Shortcuts";
+        Title = L10n.T("Keyboard Shortcuts");
         Width = 660;
         Height = 560;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -49,8 +49,8 @@ internal sealed class ShortcutDialog : DialogWindow
         _opened = new Dictionary<string, ShortcutChord>(_draft);
         _search.TextChanged += (_, _) => ShowRows();
 
-        var restore = new Button { Content = "Restore Defaults", HorizontalAlignment = HorizontalAlignment.Left };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
+        var restore = new Button { Content = L10n.T("Restore Defaults"), HorizontalAlignment = HorizontalAlignment.Left };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
         restore.Click += (_, _) => RestoreDefaults();
         cancel.Click += (_, _) => Close();
         _save.Click += (_, _) => Keep();
@@ -73,7 +73,7 @@ internal sealed class ShortcutDialog : DialogWindow
             {
                 new TextBlock
                 {
-                    Text = "Click a key, then press the one you want. Backspace clears a row and Escape stops "
+                    Text = L10n.T("Click a key, then press the one you want. Backspace clears a row and Escape stops ")
                         + "recording; the changes apply when you save.",
                     TextWrapping = TextWrapping.Wrap,
                 },
@@ -168,7 +168,7 @@ internal sealed class ShortcutDialog : DialogWindow
         if (ShortcutKeys.Bare(e.Key)) return;
         if (e.KeyModifiers.HasFlag(KeyModifiers.Meta))
         {
-            _complaint.Text = "The Windows key is reserved by Windows";
+            _complaint.Text = L10n.T("The Windows key is reserved by Windows");
             _complaint.IsVisible = true;
             return;
         }

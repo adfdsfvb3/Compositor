@@ -21,12 +21,12 @@ internal sealed class UpdateDialog : DialogWindow
 
     private UpdateDialog(string title, string message, string? page)
     {
-        Title = title;
+        Title = L10n.T(title);
         Width = 460;
         SizeToContent = SizeToContent.Height;
         CanResize = false;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        var close = new Button { Content = "Close", IsCancel = true, IsDefault = true };
+        var close = new Button { Content = L10n.T("Close"), IsCancel = true, IsDefault = true };
         close.Click += (_, _) => Close();
         var buttons = new StackPanel
         {
@@ -36,7 +36,7 @@ internal sealed class UpdateDialog : DialogWindow
         };
         if (page is not null)
         {
-            var open = new Button { Content = "What changed…" };
+            var open = new Button { Content = L10n.T("What changed…")};
             open.Click += (_, _) => Open(page);
             buttons.Children.Add(open);
         }

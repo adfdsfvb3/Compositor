@@ -24,7 +24,7 @@ internal sealed class ColorRangePanel : DialogWindow
     private readonly TextBlock _problem = new() { Foreground = Brushes.Orange, TextWrapping = TextWrapping.Wrap };
     private readonly Slider _fuzziness;
     private readonly TextBlock _readout = new() { Width = 44, VerticalAlignment = VerticalAlignment.Center };
-    private readonly CheckBox _invert = new() { Content = "Invert" };
+    private readonly CheckBox _invert = new() { Content = L10n.T("Invert")};
     private bool _showing;
     private bool _done;
 
@@ -40,7 +40,7 @@ internal sealed class ColorRangePanel : DialogWindow
     public ColorRangePanel(ColorRangeSession session)
     {
         _session = session;
-        Title = "Color Range";
+        Title = L10n.T("Color Range");
         Width = 340;
         SizeToContent = SizeToContent.Height;
         CanResize = false;
@@ -78,10 +78,10 @@ internal sealed class ColorRangePanel : DialogWindow
         {
             if (change.Property != Slider.ValueProperty || _showing) return;
             session.Fuzziness = _fuzziness.Value;
-            _readout.Text = $"{session.Fuzziness:0}";
+            _readout.Text = L10n.T($"{session.Fuzziness:0}");
             Changed?.Invoke();
         };
-        _readout.Text = $"{session.Fuzziness:0}";
+        _readout.Text = L10n.T($"{session.Fuzziness:0}");
         _invert.IsChecked = session.Invert;
         _invert.IsCheckedChanged += (_, _) =>
         {
@@ -90,8 +90,8 @@ internal sealed class ColorRangePanel : DialogWindow
             Changed?.Invoke();
         };
 
-        var ok = new Button { Content = "OK", IsDefault = true };
-        var cancel = new Button { Content = "Cancel", IsCancel = true };
+        var ok = new Button { Content = L10n.T("OK"), IsDefault = true };
+        var cancel = new Button { Content = L10n.T("Cancel"), IsCancel = true };
         ok.Click += (_, _) =>
         {
             _done = true;
@@ -122,7 +122,7 @@ internal sealed class ColorRangePanel : DialogWindow
                     Spacing = 8,
                     Children =
                     {
-                        new TextBlock { Text = "Fuzziness", Width = 70, VerticalAlignment = VerticalAlignment.Center },
+                        new TextBlock { Text = L10n.T("Fuzziness"), Width = 70, VerticalAlignment = VerticalAlignment.Center },
                         _fuzziness,
                         _readout,
                     },
@@ -158,7 +158,7 @@ internal sealed class ColorRangePanel : DialogWindow
         try
         {
             _fuzziness.Value = _session.Fuzziness;
-            _readout.Text = $"{_session.Fuzziness:0}";
+            _readout.Text = L10n.T($"{_session.Fuzziness:0}");
             _invert.IsChecked = _session.Invert;
         }
         finally

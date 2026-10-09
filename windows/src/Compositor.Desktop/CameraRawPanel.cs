@@ -42,9 +42,9 @@ internal sealed class CameraRawPanel
 
     /// <summary>What is shown over the picture while the amounts are moved: clipped shadows in blue, clipped
     /// highlights in red, and the sharpening mask. None of it is ever applied on Apply.</summary>
-    private readonly CheckBox _shadowClip = new() { Content = "Clipped shadows" };
-    private readonly CheckBox _highlightClip = new() { Content = "Clipped highlights" };
-    private readonly CheckBox _sharpenMaskView = new() { Content = "Sharpening mask" };
+    private readonly CheckBox _shadowClip = new() { Content = L10n.T("Clipped shadows")};
+    private readonly CheckBox _highlightClip = new() { Content = L10n.T("Clipped highlights")};
+    private readonly CheckBox _sharpenMaskView = new() { Content = L10n.T("Sharpening mask")};
 
     /// <summary>The scope above the groups, and the readout of the pixel the pointer is over.</summary>
     private readonly ScopesView _scopes = new() { Height = 110 };
@@ -61,7 +61,7 @@ internal sealed class CameraRawPanel
     private readonly List<CameraRawGeometryGuide> _guides = [];
     private bool _drawing;
     private readonly ComboBox _uprightChoice = new() { Width = 160 };
-    private readonly Button _drawGuides = new() { Content = "Draw Guides" };
+    private readonly Button _drawGuides = new() { Content = L10n.T("Draw Guides")};
     private readonly TextBlock _guideNote = new()
     {
         TextWrapping = Avalonia.Media.TextWrapping.Wrap,
@@ -113,7 +113,7 @@ internal sealed class CameraRawPanel
     {
         if (_drawing == drawing) return;
         _drawing = drawing;
-        _drawGuides.Content = drawing ? "Stop drawing" : "Draw Guides";
+        _drawGuides.Content = L10n.T(drawing ? "Stop drawing" : "Draw Guides");
         RefreshGuides();
         CanvasChanged?.Invoke();
     }
@@ -350,7 +350,7 @@ internal sealed class CameraRawPanel
             RefreshPreview();
         };
         _drawGuides.Click += (_, _) => SetDrawing(!_drawing);
-        var clear = new Button { Content = "Clear guides" };
+        var clear = new Button { Content = L10n.T("Clear guides")};
         clear.Click += (_, _) => ClearGuides();
         groups.Children.Add(new StackPanel
         {
@@ -358,7 +358,7 @@ internal sealed class CameraRawPanel
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = "Upright", Width = 190, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T("Upright"), Width = 190, VerticalAlignment = VerticalAlignment.Center },
                 _uprightChoice,
             },
         });
@@ -420,13 +420,13 @@ internal sealed class CameraRawPanel
         groups.Children.Add(Heading("Point color"));
         groups.Children.Add(new TextBlock
         {
-            Text = "Pick the color the brush is set to out of the picture, then move it. The Mac build picks "
+            Text = L10n.T("Pick the color the brush is set to out of the picture, then move it. The Mac build picks ")
                 + "colors by clicking on the canvas, which this panel does not do.",
             TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Opacity = 0.75,
         });
-        var addPoint = new Button { Content = "Add the brush color" };
-        var removePoint = new Button { Content = "Remove" };
+        var addPoint = new Button { Content = L10n.T("Add the brush color")};
+        var removePoint = new Button { Content = L10n.T("Remove")};
         addPoint.Click += (_, _) => AddPoint();
         removePoint.Click += (_, _) => RemovePoint();
         groups.Children.Add(new StackPanel
@@ -469,16 +469,16 @@ internal sealed class CameraRawPanel
         _glowStyle.SelectedIndex = start.GlowStyle;
         _vignetteStyle.SelectedIndex = start.VignetteStyle;
 
-        var ok = new Button { Content = "Apply" };
-        var cancel = new Button { Content = "Cancel" };
-        var reset = new Button { Content = "Reset" };
+        var ok = new Button { Content = L10n.T("Apply")};
+        var cancel = new Button { Content = L10n.T("Cancel")};
+        var reset = new Button { Content = L10n.T("Reset")};
         ok.Click += (_, _) => Apply();
         cancel.Click += (_, _) => Cancel();
         reset.Click += (_, _) => Reset();
 
         var title = new TextBlock
         {
-            Text = "Camera Raw Filter",
+            Text = L10n.T("Camera Raw Filter"),
             Margin = new Thickness(16, 12, 16, 4),
             Foreground = Skin.LabelBrush,
             FontWeight = FontWeight.SemiBold,
@@ -636,7 +636,7 @@ internal sealed class CameraRawPanel
 
     private static Control Heading(string text) => new TextBlock
     {
-        Text = text,
+        Text = L10n.T(text),
         FontWeight = FontWeight.SemiBold,
         Margin = new Thickness(0, 10, 0, 2),
     };
@@ -660,7 +660,7 @@ internal sealed class CameraRawPanel
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 190, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 190, VerticalAlignment = VerticalAlignment.Center },
                 slider,
                 readout,
             },
@@ -679,7 +679,7 @@ internal sealed class CameraRawPanel
             Spacing = 8,
             Children =
             {
-                new TextBlock { Text = label, Width = 190, VerticalAlignment = VerticalAlignment.Center },
+                new TextBlock { Text = L10n.T(label), Width = 190, VerticalAlignment = VerticalAlignment.Center },
                 box,
             },
         };
